@@ -12,7 +12,7 @@ class Entry: Codable {
     let body: String
     let timeStamp: Date
     
-    init(title: String, body: String, timeStamp: Date) {
+    init(title: String, body: String, timeStamp: Date = Date()) {
         self.title = title
         self.body = body
         self.timeStamp = timeStamp
