@@ -15,6 +15,7 @@ class EntryDetailViewController: UIViewController, UITextFieldDelegate  {
     
     // MARK: - Properties
     var entry: Entry?
+    var journal: Journal?
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -35,15 +36,17 @@ class EntryDetailViewController: UIViewController, UITextFieldDelegate  {
     
     
     @IBAction func saveButtonTapped(_ sender: Any) {
-        guard let entryTitle = titleTextField.text, !entryTitle.isEmpty,
-              let bodyText = bodyTextView.text, !bodyText.isEmpty else { return }
+        guard let title = titleTextField.text, !title.isEmpty,
+              let body = bodyTextView.text, !body.isEmpty,
+              let journal = journal else { return }
         
-        EntryController.shared.createEntryWith(newTitle: entryTitle, newBody: bodyText)
-        navigationController?.popViewController(animated: true)
+
+        EntryController.createEntryWith(newTitle: title, newBody: body, journal: journal)
         dismiss(animated: true, completion: nil)
-        updateViews()
-        EntryController.shared.saveToPersistenceStore()
-        
+        JournalController.shared.saveToPersistenceStore()
+        navigationController?.popViewController(animated: true)
+
+// save
     }
     
     // MARK: - Helper Functions
